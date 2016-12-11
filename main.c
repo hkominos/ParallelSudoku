@@ -10,26 +10,17 @@ int main(){
 
     printf("\n Sudoku Solver\n");
  	printf("\nwhat would you like to do\n\n");
- 	while(1){
+ 	while(1)
+ 	{
  	    switch(UserChoice()){
  	    	case 1: Board=LoadSudoku();
  	    	//case 1: Board=LoadSudoku();
  	    	case 0: exit(0);
  	    	default: exit(0);
-
- 	    }
- 	    	
- 	}
-
-
-
-
-	return 0;
-
-
+ 		}	  	
+ 	return 0;
+	}
 }
-
-
 
 int UserChoice(void){
 	int user_chosen_action;
