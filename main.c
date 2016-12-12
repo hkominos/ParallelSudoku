@@ -3,23 +3,32 @@
 
 #include "functions.h"
 
-int *Board=NULL; 
 
+int sudokusize=8; 
+int *ptr_sudoku_size=NULL,*Board=NULL;
 
 int main(){
+	ptr_sudoku_size=&sudokusize;
 
     printf("\n Sudoku Solver\n");
  	printf("\nwhat would you like to do\n\n");
  	while(1)
  	{
  	    switch(UserChoice()){
- 	    	case 1: Board=LoadSudoku();
- 	    	//case 1: Board=LoadSudoku();
- 	    	case 0: exit(0);
- 	    	default: exit(0);
+ 	    	case 1: {
+ 	    			Board=LoadSudoku(ptr_sudoku_size);
+ 	    			break;}
+ 	    	case 2: {
+ 	    			PrintSudoku(Board,*ptr_sudoku_size);
+ 	    			break;}
+ 	    	case 5: {exit(0);}
+ 	    	default: {
+ 	    			 printf("Possible error in input. Exiting");
+ 	    			 exit(0);}
  		}	  	
- 	return 0;
+ 	
 	}
+	return 0;
 }
 
 int UserChoice(void){

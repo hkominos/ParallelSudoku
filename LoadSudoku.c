@@ -7,8 +7,7 @@
 
 
 
-int* LoadSudoku(){
-    
+int* LoadSudoku(int *ptr_sudoku_size){
     int len,i,firstreadflag=0,linenumber=0;
     int *Board;
     char ch;
@@ -36,6 +35,7 @@ int* LoadSudoku(){
 			{   				
     			if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
     			len = strlen(buffer);
+    			*ptr_sudoku_size=len;
     			if (firstreadflag==0)
     			{ 
     				Board=(int *) malloc(len*len*sizeof(int));
@@ -43,14 +43,13 @@ int* LoadSudoku(){
     			}    			
     			for(i=0;i<len;i++)
     			{
-    				Board[linenumber*len+i]=(int)(buffer[i]-'0');
-    				fprintf(stderr,"%d",Board[(linenumber*len+i)]);
+    				Board[linenumber*len+i]=(int)(buffer[i]-'0');    				
     	 		}
     	 		linenumber++;		
 			}
 		printf("File loaded succesfully  ");			
 		}
-	fclose(fp);	
-	return 0;
+	fclose(fp);
+	return Board;
 }
 
