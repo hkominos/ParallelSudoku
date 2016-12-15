@@ -6,7 +6,7 @@
 
 int* SolveSerially(int* Board, int sudoku_size){
 //sudoku_size =9
-struct Peers** array=generatePeerList(sudoku_size);//arrayofpeers[ptr_sudoku_size*ptr_sudoku_size];
+struct Peers** array=generatePeerList(sudoku_size, Board);//arrayofpeers[ptr_sudoku_size*ptr_sudoku_size];
 
 
 
@@ -17,7 +17,7 @@ return NULL;
 
 
 
-struct Peers ** generatePeerList(int sudoku_size ){
+struct Peers ** generatePeerList(int sudoku_size, int* Board ){
 
     struct Peers **ptrtable=NULL;
     int currentcell,gridsize=sudoku_size*sudoku_size-1;
@@ -28,13 +28,14 @@ struct Peers ** generatePeerList(int sudoku_size ){
         ptrtable[currentcell]=malloc(sizeof(PEERSSTRUCT)); 
         ptrtable[currentcell]->cellid= currentcell; 
         ptrtable[currentcell]->numberofpeers = (2*sudoku_size -2 ) + (sudoku_size -(2 *((int)sqrt(sudoku_size)))+1);
+        ptrtable[currentcell]->possiblevalues = generatepossiblevalues(sudoku_size,Board,currentcell);
         ptrtable[currentcell]->Peerlist = generatepeers(currentcell,ptrtable[currentcell]->numberofpeers, gridsize, sudoku_size );
+        }   
 
-    }
     return ptrtable;
 }
 
-int * generatepeers(int currentcell,int numberofpeers,int gridsize,int sudoku_size){
+int* generatepeers(int currentcell,int numberofpeers,int gridsize,int sudoku_size){
 
     int *peertable=malloc(sizeof(int)*numberofpeers);
     int i,cell2,BoxSize=sqrt(sudoku_size),j=0;    
@@ -46,6 +47,23 @@ int * generatepeers(int currentcell,int numberofpeers,int gridsize,int sudoku_si
                 (currentcell != cell2)){
                     peertable[j++]=cell2;                  
                 }
-    }    
+        }    
 return peertable;
 }
+
+int* generatepossiblevalues(int sudoku_size, int* Board,int currentcell){
+
+    int i;
+    int *possiblevalues=malloc(sizeof(int)*sudoku_size);
+    
+    for (i = 0 ; i < sudoku_size; i++){
+        if(Board[currentcell]==0) possiblevalues[i]=i+1;
+        else {
+                possiblevalues[i]=-1;
+                possiblevalues[Board[currentcell]-1]=Board[currentcell];
+            }                
+        }
+return possiblevalues;
+}
+
+
