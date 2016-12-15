@@ -21,7 +21,8 @@ int main(){
             case 2: {
                     PrintSudoku(Board,*ptr_sudoku_size);
                     break;}
-            case 5: {exit(0);}
+            case 3: {SolveSerially(Board,*ptr_sudoku_size);}
+            case 7: {exit(0);}
             default: {
                      printf("Possible error in input. Exiting");
                      exit(0);}
@@ -37,8 +38,9 @@ int UserChoice(void){
             "2)----   Print Loaded Sudoku    ----\n"
             "3)----   Solve Serialy    ----\n"
             "4)----   Solve in Parallel    ----\n"
-            "4)----   Print Solved Sudoku    ----\n"        
-            "5)----   Exit    ----\n");
+            "5)----   Print Solved Sudoku    ----\n"
+            "6)----   Validate    ----\n"        
+            "7)----   Exit    ----\n");
 
     scanf("%d",&user_chosen_action); 
     fflush(stdin);
