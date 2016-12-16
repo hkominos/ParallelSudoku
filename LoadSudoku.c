@@ -8,6 +8,7 @@
 
 
 int* LoadSudoku(int *ptr_sudoku_size){
+   
     int len,i,firstreadflag=0,linenumber=0;
     int *Board;
     char ch;
@@ -24,31 +25,26 @@ int* LoadSudoku(int *ptr_sudoku_size){
     if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
     FILE *fp ;	
     
-    if((fp=fopen(buffer,"r"))==NULL)       
-        {
-            fprintf(stderr,"Error opening file %s",buffer);
-            getchar();
+    if((fp=fopen(buffer,"r"))==NULL) {
+        fprintf(stderr,"Error opening file %s",buffer);
+        getchar();
         }
-    else
-        {
-        	while (fgets(buffer,256, fp) != NULL)
-			{   				
-    			if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
-    			len = strlen(buffer);
-    			*ptr_sudoku_size=len;
-    			if (firstreadflag==0)
-    			{ 
-    				Board=(int *) malloc(len*len*sizeof(int));
-    				firstreadflag=1;
-    			}    			
-    			for(i=0;i<len;i++)
-    			{
-    				Board[linenumber*len+i]=(int)(buffer[i]-'0');    				
-    	 		}
-    	 		linenumber++;		
-			}
-		printf("File loaded succesfully  ");			
+    else{
+       	while (fgets(buffer,256, fp) != NULL){   				
+    	    if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
+    	    len = strlen(buffer);
+            *ptr_sudoku_size=len;
+            if (firstreadflag==0){
+	            Board=(int *) malloc(len*len*sizeof(int));
+    		    firstreadflag=1;
+    		}    			
+    		for(i=0;i<len;i++){
+    			Board[linenumber*len+i]=(int)(buffer[i]-'0');    				
+    	 	}
+    	 	linenumber++;		
 		}
+	printf("File loaded succesfully ");			
+	}
 	fclose(fp);
 	return Board;
 }

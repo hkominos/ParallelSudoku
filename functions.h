@@ -3,11 +3,11 @@
 
 
 struct Peers{
-int cellid;
-int numberofpeers;
-int* possiblevalues;
-int* Peerlist;
-
+ 
+    int cellid;
+    int numberofpeers;
+    int* possiblevalues;
+    int* Peerlist;
 };
 
 

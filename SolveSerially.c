@@ -46,8 +46,8 @@ int* generatepeers(int currentcell,int numberofpeers,int gridsize,int sudoku_siz
                 (currentcell / sudoku_size / BoxSize == cell2 / sudoku_size / BoxSize && currentcell % sudoku_size / BoxSize == cell2 % sudoku_size / BoxSize)) && //if cells in box
                 (currentcell != cell2)){
                     peertable[j++]=cell2;                  
-                }
-        }    
+            }
+    }    
 return peertable;
 }
 
@@ -61,8 +61,8 @@ int* generatepossiblevalues(int sudoku_size, int* Board,int currentcell){
         else {
                 possiblevalues[i]=-1;
                 possiblevalues[Board[currentcell]-1]=Board[currentcell];
-            }                
-        }
+        }                
+    }
 return possiblevalues;
 }
 
