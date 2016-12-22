@@ -4,11 +4,11 @@
 #include "functions.h"
 
 
-int sudokusize=8; 
+int sudoku_size=8; 
 int *ptr_sudoku_size=NULL,*Board=NULL;
 
 int main(){
-    ptr_sudoku_size=&sudokusize;
+    ptr_sudoku_size=&sudoku_size;
 
     printf("\n Sudoku Solver\n");
     printf("\nwhat would you like to do\n\n");
