@@ -31,9 +31,9 @@ int UserChoice(void);
 int* LoadSudoku(int *sudoku_size);
 void PrintSudoku(int* Board,int sudoku_size);
 int* SolveSerially(int* Board, int ptr_sudoku_size);
-struct CELLINFO** GeneratePeerList (int sudoku_size,int* Board);
+CELLINFOSTRUCT** GeneratePeerList (int sudoku_size,int* Board);
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size );
-struct VALUE* GeneratePossibleValues (int sudoku_size, int* Board, int current_cell);
+VALUESTRUCT* GeneratePossibleValues (int sudoku_size, int* Board, int current_cell);
 
 
 
