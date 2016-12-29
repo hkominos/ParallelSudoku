@@ -42,4 +42,6 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
 int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
 
 
+void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
+
 #endif /* FUNCTIONS_H_ */

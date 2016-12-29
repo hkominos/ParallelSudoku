@@ -98,9 +98,13 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
     bool valid=true;
     int* ReturnBoard=NULL;
     int propagationresult=NULL;
+    //PrintSET(array_of_sudoku_cellstruckts_to_solve);
+
 
     while(unsolved==true && valid==true){
         propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+        
+
         if (propagationresult==MADE_PROGRESS){
             continue;            
         }
@@ -130,6 +134,8 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
+        //PrintSET(array_of_sudoku_cellstruckts_to_solve);
+        
     }
     else if((constraint1==DID_NOT_MAKE_PROGRESS) && (constraint2==DID_NOT_MAKE_PROGRESS)){
         propagation_result= DID_NOT_MAKE_PROGRESS;
@@ -207,4 +213,22 @@ return returnValue;
 
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
 ;
+}
+
+
+void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
+    int i,max=80;
+    VALUESTRUCT* head;
+
+    for(i=0;i<80;i++){
+        head=array_of_sudoku_cellstruckts_to_solve[i]->values_list;
+        while(head!=NULL){
+            printf("%d",head->possible_value);
+            head=head->next;
+        }
+        printf("\n");
+
+    }
+
+
 }
