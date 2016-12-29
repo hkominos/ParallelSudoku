@@ -43,7 +43,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
             }
             linenumber++;       
         }
-    printf("File loaded succesfully ");         
+    printf("File loaded succesfully \n\n ");         
     }
     fclose(fp);
     return Board;

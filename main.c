@@ -21,7 +21,9 @@ int main(){
             case 2: {
                     PrintSudoku(Board,*ptr_sudoku_size);
                     break;}
-            case 3: {SolveSerially(Board,*ptr_sudoku_size);}
+            case 3: {
+                    SolveSerially(Board,*ptr_sudoku_size);
+                    break;}
             case 7: {exit(0);}
             default: {
                      printf("Possible error in input. Exiting");
