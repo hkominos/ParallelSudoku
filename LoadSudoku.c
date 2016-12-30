@@ -8,42 +8,42 @@
 
 
 int* LoadSudoku(int *ptr_sudoku_size){
-   
+
     int len,i,firstreadflag=0,linenumber=0;
     int *Board;
     char ch;
-    char *buffer,test;
+    char *buffer;
     size_t bufsize = 32;
-    long number;
+
     buffer = (char *)malloc(bufsize * sizeof(char));
     printf("Type the name of the sudoku file ");
-    while ((ch = getchar()) != '\n' && ch != EOF);  
-    getline(&buffer,&bufsize,stdin);    
-    
+    while ((ch = getchar()) != '\n' && ch != EOF);
+    getline(&buffer,&bufsize,stdin);
+
     //strip newline character
     char *pos;
     if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
-    FILE *fp ;  
-    
+    FILE *fp ;
+
     if((fp=fopen(buffer,"r"))==NULL) {
         fprintf(stderr,"Error opening file %s",buffer);
         getchar();
         }
     else{
-        while (fgets(buffer,256, fp) != NULL){                  
+        while (fgets(buffer,256, fp) != NULL){
             if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
             len = strlen(buffer);
             *ptr_sudoku_size=len;
             if (firstreadflag==0){
                 Board=(int *) malloc(len*len*sizeof(int));
                 firstreadflag=1;
-            }               
-            for(i=0;i<len;i++){
-                Board[linenumber*len+i]=(int)(buffer[i]-'0');                   
             }
-            linenumber++;       
+            for(i=0;i<len;i++){
+                Board[linenumber*len+i]=(int)(buffer[i]-'0');
+            }
+            linenumber++;
         }
-    printf("File loaded succesfully \n\n ");         
+    printf("File loaded succesfully \n\n ");
     }
     fclose(fp);
     return Board;
