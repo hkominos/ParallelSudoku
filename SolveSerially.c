@@ -12,12 +12,11 @@
 
 int* SolveSerially(int* board_to_solve, int sudoku_size){
 //sudoku_size =9
-CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
-PrintSET(array_of_sudoku_cellstruckts_to_solve);
-int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-PrintSET(array_of_sudoku_cellstruckts_to_solve);
+    CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
+//PrintSET(array_of_sudoku_cellstruckts_to_solve);
+    int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+//PrintSET(array_of_sudoku_cellstruckts_to_solve);
 return SolvedBoard;
-
 }
 
 
@@ -26,7 +25,6 @@ CELLINFOSTRUCT** GenerateSudokuStruct(int sudoku_size, int* Board ){
 
     struct CELLINFO **ptrtable=NULL;
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
-
 
     ptrtable=(struct CELLINFO **)malloc(grid_size*sizeof(CELLINFOSTRUCT * ));
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
@@ -38,7 +36,7 @@ CELLINFOSTRUCT** GenerateSudokuStruct(int sudoku_size, int* Board ){
         ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
 
         }
-    return ptrtable;
+return ptrtable;
 }
 
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size){
@@ -80,7 +78,7 @@ VALUESTRUCT* GeneratePossibleValues(int sudoku_size, int* Board,int current_cell
             head = newnode;
         }
     }
-return head;
+    return head;
 }
 
 
@@ -96,32 +94,31 @@ return counter;
 
 
 int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size){
+
     bool unsolved=true;
     bool valid=true;
     int* ReturnBoard=NULL;
     int propagationresult=NULL;
-    //PrintSET(array_of_sudoku_cellstruckts_to_solve);
 
-
+    //helper variable to be removed
     int counter=0;
-    while(unsolved==true && valid==true&& counter<2){
+    //end of helper variables
+
+    while(unsolved==true && valid==true&& counter<2 ){
         propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-
-
         if (propagationresult==MADE_PROGRESS){
-                counter++;
+            counter++;
             continue;
         }
         else if (propagationresult==DID_NOT_MAKE_PROGRESS){
             counter++;
-                //PrintSET(array_of_sudoku_cellstruckts_to_solve);
+            //PrintSET(array_of_sudoku_cellstruckts_to_solve);
             //Search()
             //CreateNewBoard()
             //ReturnBoard=Solveboard()
             //if(ReturnBoard==NULL){break;}
             //else{unsolved=false;}
         }
-
         else if(propagationresult==INVALID){valid=false;printf("INVALID");counter++;}
     }
 
@@ -140,12 +137,9 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
-        //PrintSET(array_of_sudoku_cellstruckts_to_solve);
-
     }
     else if((constraint1==DID_NOT_MAKE_PROGRESS) && (constraint2==DID_NOT_MAKE_PROGRESS)){
         propagation_result= DID_NOT_MAKE_PROGRESS;
-
     }
     else{ propagation_result= MADE_PROGRESS; }
 
@@ -162,9 +156,8 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
     int  from_peer,value_to_remove,returnValue;
 
 
-    for(j=0;j<(grid_size);j++){
+    for(j=0;j<=(grid_size);j++){
         if(removal_result==INVALID){break;}
-
         if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==1){
             for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){
 
@@ -178,15 +171,14 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
                 }
                 else if(returnValue==MADE_PROGRESS){
                     removal_result=MADE_PROGRESS;
-
                 }
-                else{removal_result=DID_NOT_MAKE_PROGRESS;}
-
+                else{
+                    if(removal_result==MADE_PROGRESS){;}
+                    else{removal_result=DID_NOT_MAKE_PROGRESS;}
+                }
             }
         }
     }
-
-
 
 return removal_result;
 }
@@ -205,16 +197,15 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
                break;
             }
             else{
-                    if(previous==NULL){
-                            previous=head;
-                            head=(head->next);
-                            free(previous);
-
-                    }else{
-                        previous->next=head->next;
-                        free(head);
-                        head=previous->next;
-                    }
+                if(head==array_of_sudoku_cellstruckts_to_solve[from_peer]->values_list){
+                    VALUESTRUCT* temp=head;
+                    array_of_sudoku_cellstruckts_to_solve[from_peer]->values_list=(head->next);
+                    free(temp);
+                }else{
+                    previous->next=head->next;
+                    free(head);
+                    head=previous->next;
+                }
 
                 (array_of_sudoku_cellstruckts_to_solve[from_peer]->possible_values)--;
                 returnValue=MADE_PROGRESS;
@@ -226,7 +217,6 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
     }while(head!=NULL);
 
 return returnValue;
-
 }
 
 
@@ -234,14 +224,14 @@ return returnValue;
 
 
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
-;
+return 0;
 }
 
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
     int i,count,max=9;
     VALUESTRUCT* head;
-      printf("\n");
+    printf("\n");
 
     int test;
     for(i=0;i<max;i++){
@@ -249,15 +239,14 @@ void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
         count=CountPossibleValues(head);
 
         while(head!=NULL){
-                test=head->possible_value;
-            printf("%d and",test);
-
+            test=head->possible_value;
+            printf("%d",test);
             head=head->next;
         }
-      printf("and i count values %d \n",count);
+      printf("\n");
       //printf("the structure thinks%d /n",array_of_sudoku_cellstruckts_to_solve[i]->possible_values);
     }
 
-    //printf("end of set\n");
+    printf("end of set\n");
 
 }
