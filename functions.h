@@ -2,6 +2,11 @@
 #define FUNCTIONS_H_
 
 
+#define INVALID                 0
+#define MADE_PROGRESS           1
+#define DID_NOT_MAKE_PROGRESS   2
+
+
 
 
 struct VALUE{
@@ -24,6 +29,9 @@ struct CELLINFO{
 typedef struct VALUE VALUESTRUCT;
 typedef struct CELLINFO CELLINFOSTRUCT;
 typedef enum { false, true } bool;
+
+
+
 
 
 
