@@ -9,7 +9,7 @@
 
 int* LoadSudoku(int *ptr_sudoku_size){
 
-    int len,i,firstreadflag=0,linenumber=0;
+    int len,i,value,firstreadflag=0,linenumber=0;
     int *Board;
     char ch;
     char *buffer;
@@ -39,7 +39,15 @@ int* LoadSudoku(int *ptr_sudoku_size){
                 firstreadflag=1;
             }
             for(i=0;i<len;i++){
-                Board[linenumber*len+i]=(int)(buffer[i]-'0');
+                    if(isspace(buffer[i])){continue;}
+                    else{
+                        if(buffer[i]<58)
+                        Board[linenumber*len+i]=(int)(buffer[i]-'0');
+                        else{
+                            printf("%d ",(int)(buffer[i]-'7'));
+                            Board[linenumber*len+i]=(int)((int)(buffer[i]-'7'));
+                        }
+                    }
             }
             linenumber++;
         }
