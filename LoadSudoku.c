@@ -9,7 +9,7 @@
 
 int* LoadSudoku(int *ptr_sudoku_size){
 
-    int len,i,value,firstreadflag=0,linenumber=0;
+    int len,i,firstreadflag=0,linenumber=0;
     int *Board;
     char ch;
     char *buffer;

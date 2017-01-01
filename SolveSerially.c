@@ -59,9 +59,9 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 
     int propagation_result,constraint1,constraint2;
 
-    constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    //constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    constraint2=DID_NOT_MAKE_PROGRESS;
+    //constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    constraint1=DID_NOT_MAKE_PROGRESS;
 
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
@@ -70,8 +70,6 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
         propagation_result= DID_NOT_MAKE_PROGRESS;
     }
     else{ propagation_result= MADE_PROGRESS; }
-
-
 
 return propagation_result;
 }
@@ -84,8 +82,107 @@ return propagation_result;
 
 
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
-return 0;
+
+    int j,grid_size=sudoku_size*sudoku_size-1;
+    int removal_result=DID_NOT_MAKE_PROGRESS;
+    VALUESTRUCT* value_ptr=NULL;
+    int returnValue;
+
+    for(j=0;j<=(grid_size);j++){
+        if(removal_result==INVALID){break;}
+        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values!=1){
+
+            value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
+
+            while(value_ptr!=NULL){
+            printf("%d ",value_ptr->possible_value);
+                if(CheckPeersForValue(value_ptr->possible_value,array_of_sudoku_cellstruckts_to_solve,j)==0){
+                    returnValue=SetValueToCurrentcell(array_of_sudoku_cellstruckts_to_solve,value_ptr->possible_value,j);
+                    //returnValue=MADE_PROGRESS;
+                    if(returnValue==INVALID){
+                        removal_result=INVALID;
+                    }
+                    else if(returnValue==MADE_PROGRESS){
+                        removal_result=MADE_PROGRESS;
+                    }
+                    else{
+                        if(removal_result==MADE_PROGRESS){;}
+                        else{removal_result=DID_NOT_MAKE_PROGRESS;}
+                    }
+                }
+                else{;}
+                value_ptr=value_ptr->next;
+            }
+        }
+    }
+return removal_result;
 }
+
+
+int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell){
+    int i,position,count=0;
+    int* array_of_peers=array_of_sudoku_cellstruckts_to_solve[current_cell]->Peerlist;
+    int number_of_peers=array_of_sudoku_cellstruckts_to_solve[current_cell]->number_of_peers;
+
+    for(i=0;i<number_of_peers;i++){
+        position=array_of_peers[i];
+        count+=checkifpeerhasvalue(possible_value,array_of_sudoku_cellstruckts_to_solve[position]->values_list);
+    }
+
+
+
+
+return count;
+}
+
+int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head){
+    int value_exists=0;
+    while(head!=NULL){
+        if ((head->possible_value)==possible_value){
+            value_exists=1;
+            break;
+        }
+        head=head->next;
+    }
+
+return value_exists;
+}
+
+
+int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int final_value,int current_cell){
+
+    printf("final value is %d",final_value);
+
+    int placement_result=DID_NOT_MAKE_PROGRESS;
+    /** \brief
+     *
+     * \param
+     * \param
+     * \return
+     *
+
+
+    VALUESTRUCT* newhead;
+    VALUESTRUCT* previoushead=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
+    array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
+
+    newhead=malloc(sizeof(VALUESTRUCT));
+    newhead->possible_value=final_value;
+    newhead->next=NULL;
+    array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list=newhead;
+
+
+    while(previoushead!=NULL){
+            newhead=previoushead;
+            previoushead=previoushead->next;
+            free(newhead);
+    }
+*/
+    placement_result=MADE_PROGRESS;
+
+return placement_result;
+}
+
 
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){

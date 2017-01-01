@@ -48,7 +48,9 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
-
+int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head);
+int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell);
+int SetValueToCurrentcell();
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
 

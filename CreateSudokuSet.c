@@ -36,6 +36,7 @@ int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku
                     peer_table[j++]=cell2;
             }
     }
+
 return peer_table;
 }
 
