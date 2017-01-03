@@ -11,9 +11,9 @@
 int* SolveSerially(int* board_to_solve, int sudoku_size){
 //sudoku_size =9
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
-//PrintSET(array_of_sudoku_cellstruckts_to_solve);
+PrintSET(array_of_sudoku_cellstruckts_to_solve);
     int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-//PrintSET(array_of_sudoku_cellstruckts_to_solve);
+PrintSET(array_of_sudoku_cellstruckts_to_solve);
 return SolvedBoard;
 }
 
@@ -95,12 +95,14 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
             value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
 
             while(value_ptr!=NULL){
-            printf("%d ",value_ptr->possible_value);
+
                 if(CheckPeersForValue(value_ptr->possible_value,array_of_sudoku_cellstruckts_to_solve,j)==0){
                     returnValue=SetValueToCurrentcell(array_of_sudoku_cellstruckts_to_solve,value_ptr->possible_value,j);
-                    //returnValue=MADE_PROGRESS;
+                    returnValue=MADE_PROGRESS;
+
                     if(returnValue==INVALID){
                         removal_result=INVALID;
+                        break;
                     }
                     else if(returnValue==MADE_PROGRESS){
                         removal_result=MADE_PROGRESS;
@@ -151,33 +153,22 @@ return value_exists;
 
 int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int final_value,int current_cell){
 
-    printf("final value is %d",final_value);
-
     int placement_result=DID_NOT_MAKE_PROGRESS;
-    /** \brief
-     *
-     * \param
-     * \param
-     * \return
-     *
 
-
-    VALUESTRUCT* newhead;
+    VALUESTRUCT* temp;
     VALUESTRUCT* previoushead=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
     array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
 
-    newhead=malloc(sizeof(VALUESTRUCT));
-    newhead->possible_value=final_value;
-    newhead->next=NULL;
-    array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list=newhead;
-
-
     while(previoushead!=NULL){
-            newhead=previoushead;
+            temp=previoushead;
             previoushead=previoushead->next;
-            free(newhead);
+            //free(temp);
     }
-*/
+
+    VALUESTRUCT* finalvalue=malloc(sizeof(VALUESTRUCT));
+    finalvalue->possible_value=final_value;
+    finalvalue->next=NULL;
+    array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list=finalvalue;
     placement_result=MADE_PROGRESS;
 
 return placement_result;
@@ -186,7 +177,7 @@ return placement_result;
 
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
-    int i,count,max=10;
+    int i,count,max=24;
     VALUESTRUCT* head;
     printf("\n");
 
@@ -197,7 +188,7 @@ void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
 
         while(head!=NULL){
             test=head->possible_value;
-            printf("%d",test);
+            printf("%d ",test);
             head=head->next;
         }
       printf("\n");
