@@ -9,25 +9,25 @@
 
 
 
-struct VALUE{
+typedef struct VALUE{
 
 int possible_value;
 struct VALUE *next;
 
-};
+} VALUESTRUCT;
 
 
-struct CELLINFO{
+typedef struct CELLINFO{
 
     int cellid;
     int number_of_peers;
     int possible_values;
     struct VALUE* values_list;
     int* Peerlist;
-};
+}CELLINFOSTRUCT ;
 
-typedef struct VALUE VALUESTRUCT;
-typedef struct CELLINFO CELLINFOSTRUCT;
+//typedef struct VALUE VALUESTRUCT;
+//typedef struct CELLINFO CELLINFOSTRUCT;
 typedef enum { false, true } bool;
 
 

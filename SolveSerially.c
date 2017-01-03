@@ -160,12 +160,16 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
     array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
 
     while(previoushead!=NULL){
+
             temp=previoushead;
+
             previoushead=previoushead->next;
-            //free(temp);
+            free(temp);
+
     }
 
     VALUESTRUCT* finalvalue=malloc(sizeof(VALUESTRUCT));
+
     finalvalue->possible_value=final_value;
     finalvalue->next=NULL;
     array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list=finalvalue;
@@ -173,6 +177,8 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
 
 return placement_result;
 }
+
+
 
 
 
