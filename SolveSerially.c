@@ -11,9 +11,9 @@
 int* SolveSerially(int* board_to_solve, int sudoku_size){
 //sudoku_size =9
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
-PrintSET(array_of_sudoku_cellstruckts_to_solve);
+//PrintSET(array_of_sudoku_cellstruckts_to_solve);
     int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-PrintSET(array_of_sudoku_cellstruckts_to_solve);
+//PrintSET(array_of_sudoku_cellstruckts_to_solve);
 return SolvedBoard;
 }
 
@@ -156,23 +156,19 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
     int placement_result=DID_NOT_MAKE_PROGRESS;
 
     VALUESTRUCT* temp;
-    VALUESTRUCT* previoushead=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
+    VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
     array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
+    head->possible_value=final_value;
+    temp=head;
+    head->next=NULL;
+    head=temp->next;
 
-    while(previoushead!=NULL){
 
-            temp=previoushead;
-
-            previoushead=previoushead->next;
-            free(temp);
-
+    while(head!=NULL){
+        temp=head;
+        head=head->next;
+        free(temp);
     }
-
-    VALUESTRUCT* finalvalue=malloc(sizeof(VALUESTRUCT));
-
-    finalvalue->possible_value=final_value;
-    finalvalue->next=NULL;
-    array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list=finalvalue;
     placement_result=MADE_PROGRESS;
 
 return placement_result;
@@ -183,7 +179,7 @@ return placement_result;
 
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
-    int i,count,max=24;
+    int i,count,max=20;
     VALUESTRUCT* head;
     printf("\n");
 
@@ -198,7 +194,7 @@ void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
             head=head->next;
         }
       printf("\n");
-      //printf("the structure thinks%d /n",array_of_sudoku_cellstruckts_to_solve[i]->possible_values);
+      //printf("the structure thinks%d /n",count);
     }
 
     printf("end of set\n");
