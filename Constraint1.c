@@ -7,26 +7,29 @@
 
 
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
+    
     int i,j,grid_size=sudoku_size*sudoku_size-1;
     int removal_result=DID_NOT_MAKE_PROGRESS;
     int  from_peer,value_to_remove,returnValue;
-
-
-    for(j=0;j<=(grid_size);j++){
+   
+    
+    for(j=0;j<=(grid_size);j++){        
         if(removal_result==INVALID){break;}
         if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==1){
-            for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){
 
+            for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){                
                 from_peer=array_of_sudoku_cellstruckts_to_solve[j]->Peerlist[i];
-                value_to_remove=board_to_solve[j];
-
+                
+                if(board_to_solve[j]!=0){value_to_remove=board_to_solve[j];}
+                else{value_to_remove=array_of_sudoku_cellstruckts_to_solve[j]->values_list->possible_value;}
+                
+                
                 returnValue=RemoveValue(from_peer,value_to_remove,array_of_sudoku_cellstruckts_to_solve);
                 if(returnValue==INVALID){
                     removal_result=INVALID;
-
                 }
                 else if(returnValue==MADE_PROGRESS){
-                    removal_result=MADE_PROGRESS;
+                    removal_result=MADE_PROGRESS;                    
                 }
                 else{
                     if(removal_result==MADE_PROGRESS){;}
@@ -35,6 +38,7 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
             }
         }
     }
+
 
 return removal_result;
 }
@@ -72,6 +76,8 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
                 head=head->next;}
     }while(head!=NULL);
 
+
+ 
 return returnValue;
 }
 
