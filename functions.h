@@ -11,8 +11,8 @@
 
 typedef struct VALUE{
 
-int possible_value;
-struct VALUE *next;
+    int possible_value;
+    struct VALUE *next;
 
 } VALUESTRUCT;
 
@@ -51,7 +51,12 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
 int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head);
 int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell);
 int SetValueToCurrentcell();
-
+bool IfSudokuIsSolved(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
+int * putStrucktinboard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
+int findcelltobranch(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
+CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int possible_value,int celltoedit);
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
+VALUESTRUCT* CopyValuesStruckt(VALUESTRUCT* old_values_head);
+void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
 
 #endif /* FUNCTIONS_H_ */

@@ -34,6 +34,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
             if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
             len = strlen(buffer);
             *ptr_sudoku_size=len;
+            printf("sudoku_size is %d\n",len);
             if (firstreadflag==0){
                 Board=(int *) malloc(len*len*sizeof(int));
                 firstreadflag=1;
@@ -43,8 +44,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
                     else{
                         if(buffer[i]<58)
                         Board[linenumber*len+i]=(int)(buffer[i]-'0');
-                        else{
-                            printf("%d ",(int)(buffer[i]-'7'));
+                        else{                            
                             Board[linenumber*len+i]=(int)((int)(buffer[i]-'7'));
                         }
                     }

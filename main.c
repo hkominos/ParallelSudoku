@@ -6,6 +6,7 @@
 
 int sudoku_size=0;
 int *ptr_sudoku_size=NULL,*Board=NULL;
+int *solved_board=NULL;
 
 int main(){
     ptr_sudoku_size=&sudoku_size;
@@ -17,12 +18,16 @@ int main(){
         switch(UserChoice()){
             case 1: {
                     Board=LoadSudoku(ptr_sudoku_size);
+                    printf("Sudoku size is %d * %d\n",*ptr_sudoku_size,*ptr_sudoku_size );                    
                     break;}
-            case 2: {
+            case 2: {                
                     PrintSudoku(Board,*ptr_sudoku_size);
                     break;}
             case 3: {
-                    SolveSerially(Board,*ptr_sudoku_size);
+                    solved_board=SolveSerially(Board,*ptr_sudoku_size);
+                    break;}
+            case 5: {
+                    PrintSudoku(solved_board,*ptr_sudoku_size);
                     break;}
             case 7: {exit(0);}
             default: {

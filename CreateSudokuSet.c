@@ -19,7 +19,8 @@ CELLINFOSTRUCT** GenerateSudokuStruct(int sudoku_size, int* Board ){
         ptrtable[current_cell]->possible_values= CountPossibleValues(ptrtable[current_cell]->values_list);
         ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
 
-        }
+        }    
+
 return ptrtable;
 }
 

@@ -11,12 +11,17 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
     int removal_result=DID_NOT_MAKE_PROGRESS;
     VALUESTRUCT* value_ptr=NULL;
     int returnValue;
+    bool valid=true;
 
     
 
-    for(j=0;j<=(grid_size);j++){
+    for(j=0;j<=(grid_size)&&valid==true;j++){
         if(removal_result==INVALID){break;}
-        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values!=1){      
+        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values<1){
+            removal_result=INVALID;
+            break;
+        }
+        else if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values>1 && valid==true){      
             value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
             while(value_ptr!=NULL){
 
@@ -24,6 +29,7 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
                     returnValue=SetValueToCurrentcell(array_of_sudoku_cellstruckts_to_solve,value_ptr->possible_value,j);                   
                     if(returnValue==INVALID){
                         removal_result=INVALID;
+                        valid=false;
                         break;
                     }
                     else if(returnValue==MADE_PROGRESS){
@@ -75,22 +81,26 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
 
     int placement_result=DID_NOT_MAKE_PROGRESS;
 
-    VALUESTRUCT* temp;
-    VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
-    array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
-    head->possible_value=final_value;
-    temp=head;
-    head->next=NULL;
-    head=temp->next;
-
-
-    while(head!=NULL){
-        temp=head;
-        head=head->next;
-        free(temp);
+    if(array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values==1){
+        placement_result=INVALID;
     }
-    placement_result=MADE_PROGRESS;
+    else{
+        VALUESTRUCT* temp;
+        VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
+        array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
+        head->possible_value=final_value;
+        temp=head;
+        head->next=NULL;
+        head=temp->next;
 
+
+        while(head!=NULL){
+            temp=head;
+            head=head->next;
+            free(temp);
+        }
+        placement_result=MADE_PROGRESS;
+    }
 return placement_result;
 }
 

@@ -7,29 +7,34 @@
 
 
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
-    
+
     int i,j,grid_size=sudoku_size*sudoku_size-1;
     int removal_result=DID_NOT_MAKE_PROGRESS;
     int  from_peer,value_to_remove,returnValue;
-   
-    
+
+
     for(j=0;j<=(grid_size);j++){        
         if(removal_result==INVALID){break;}
+        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==0){
+            removal_result=INVALID;
+            break;
+        }
         if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==1){
 
-            for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){                
+            for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){
                 from_peer=array_of_sudoku_cellstruckts_to_solve[j]->Peerlist[i];
-                
+
                 if(board_to_solve[j]!=0){value_to_remove=board_to_solve[j];}
                 else{value_to_remove=array_of_sudoku_cellstruckts_to_solve[j]->values_list->possible_value;}
-                
-                
+
+
                 returnValue=RemoveValue(from_peer,value_to_remove,array_of_sudoku_cellstruckts_to_solve);
                 if(returnValue==INVALID){
                     removal_result=INVALID;
+                    break;
                 }
                 else if(returnValue==MADE_PROGRESS){
-                    removal_result=MADE_PROGRESS;                    
+                    removal_result=MADE_PROGRESS;
                 }
                 else{
                     if(removal_result==MADE_PROGRESS){;}
@@ -37,6 +42,7 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
                 }
             }
         }
+
     }
 
 
@@ -53,7 +59,7 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
     do{
         if(head->possible_value==value_to_remove){
             if(array_of_sudoku_cellstruckts_to_solve[from_peer]->possible_values==1){
-               returnValue=INVALID;
+               returnValue=INVALID;               
                break;
             }
             else{
@@ -77,7 +83,7 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
     }while(head!=NULL);
 
 
- 
+
 return returnValue;
 }
 
