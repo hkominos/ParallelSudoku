@@ -18,7 +18,8 @@ int main(){
         switch(UserChoice()){
             case 1: {
                     Board=LoadSudoku(ptr_sudoku_size);
-                    printf("Sudoku size is %d * %d\n",*ptr_sudoku_size,*ptr_sudoku_size );                    
+                    printf("Sudoku size is %d * %d\n",*ptr_sudoku_size,*ptr_sudoku_size );  
+
                     break;}
             case 2: {                
                     PrintSudoku(Board,*ptr_sudoku_size);
@@ -29,8 +30,11 @@ int main(){
             case 5: {
                     PrintSudoku(solved_board,*ptr_sudoku_size);
                     break;}
-            case 7: {exit(0);}
+            case 7: {free(Board);
+                     exit(0);
+                    }
             default: {
+                     free(Board);
                      printf("Possible error in input. Exiting");
                      exit(0);}
         }

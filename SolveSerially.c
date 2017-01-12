@@ -1,18 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #include "functions.h"
 
 
 
 
+int CountPossibleValues2(VALUESTRUCT** head);
+
 
 int* SolveSerially(int* board_to_solve, int sudoku_size){
 //sudoku_size =9
+    clock_t begin = clock();
+    int* SolvedBoard=NULL;
+
+
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
     //PrintSET(array_of_sudoku_cellstruckts_to_solve);
-    int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    //int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    //freeoldboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Elapsed: %f seconds\n",time_spent );
     //PrintSET(array_of_sudoku_cellstruckts_to_solve);
 return SolvedBoard;
 }
@@ -26,45 +37,46 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
     int* ReturnBoard=NULL;
     int propagationresult=-1;
     int cell=0;
-    
+
 
     while(ReturnBoard==NULL && valid==true  ){
         propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-        if (propagationresult==MADE_PROGRESS){                
+        if (propagationresult==MADE_PROGRESS){
             continue;
         }
-        else if (propagationresult==DID_NOT_MAKE_PROGRESS){            
-            
+        else if (propagationresult==DID_NOT_MAKE_PROGRESS){
+
             if(IfSudokuIsSolved(array_of_sudoku_cellstruckts_to_solve,sudoku_size)){
                 printf("SOLVED\n");
                 ReturnBoard=putStrucktinboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
             }
             else{
                 cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
-                VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;                
+                VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
                 int max_tries=CountPossibleValues(temp);
                 int backtrack_counter=0;
-                do{                
+                do{
                     CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
                     ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
                     if(ReturnBoard==NULL){
                         backtrack_counter++;
                         freeoldboard(new_board,sudoku_size);
+                        printf("freecalled");
 
                     }
                     if(backtrack_counter==max_tries){
                         valid=false;
                         ReturnBoard=NULL;
-                                                
-                        break;  }                                            
+
+                        break;  }
                     temp=temp->next;
-                }while(temp!=NULL && ReturnBoard==NULL );              
+                }while(temp!=NULL && ReturnBoard==NULL );
 
             }
         }
         else if(propagationresult==INVALID){
             valid=false;
-            ReturnBoard=NULL;                     
+            ReturnBoard=NULL;
             break;  }
     }
 
@@ -77,16 +89,22 @@ void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size){
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
 
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
-        VALUESTRUCT* temp= NULL;
-        VALUESTRUCT* head = board_to_free[current_cell]->values_list;
-        while(head!=NULL){
-            temp=head;
-            head=head->next;
-            free(temp);
-        }
+    //    VALUESTRUCT* temp= NULL;
+    //    VALUESTRUCT* head = board_to_free[current_cell]->values_list;
+    //    while(head!=NULL){
+    //        temp=head;
+     //       head=head->next;
+     //       free(temp);
+     //   }
+     //   board_to_free[current_cell]->values_list=NULL;
+        
+        
+
         free(board_to_free[current_cell]);
 
     }
+
+    free(board_to_free);
 }
 
 
@@ -97,6 +115,7 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
     ptrtable=(struct CELLINFO **)malloc(grid_size*sizeof(CELLINFOSTRUCT * ));
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
 
+        
         ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));
         ptrtable[current_cell]->cellid = old_board[current_cell]->cellid;
         ptrtable[current_cell]->number_of_peers = old_board[current_cell]->number_of_peers;
@@ -119,7 +138,7 @@ VALUESTRUCT* CopyValuesStruckt(VALUESTRUCT* old_values_head){
     struct VALUE*  newnode=NULL;
 
     do{
-        newnode=malloc(sizeof(VALUESTRUCT));
+        newnode=malloc(sizeof(newnode));
         newnode->possible_value=old_values_head->possible_value;
         newnode->next=head;
         head=newnode;
@@ -158,7 +177,7 @@ return cell_with_min_value;
 
 int * putStrucktinboard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size){
 
-    int* final_board=(int *) malloc(sudoku_size*sudoku_size*sizeof(int));
+    int* final_board=(int *) malloc(sudoku_size*sudoku_size*sizeof(final_board));
     int i;
     int grid_size=sudoku_size*sudoku_size-1;
 
@@ -191,7 +210,7 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 
     constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
     constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    constraint2=DID_NOT_MAKE_PROGRESS;
+    //constraint2=DID_NOT_MAKE_PROGRESS;
 
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
@@ -226,3 +245,5 @@ void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
     }
    // printf("end of set\n");
 }
+
+

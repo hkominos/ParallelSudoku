@@ -54,6 +54,8 @@ int* LoadSudoku(int *ptr_sudoku_size){
     printf("File loaded succesfully \n\n ");
     }
     fclose(fp);
+    free(buffer);
+    
     return Board;
 }
 
