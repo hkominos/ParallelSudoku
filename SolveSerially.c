@@ -14,13 +14,10 @@ int CountPossibleValues2(VALUESTRUCT** head);
 int* SolveSerially(int* board_to_solve, int sudoku_size){
 //sudoku_size =9
     clock_t begin = clock();
-    int* SolvedBoard=NULL;
-
-
-    CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
-    //PrintSET(array_of_sudoku_cellstruckts_to_solve);
-    //int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    //freeoldboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
+    
+    CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);    
+    int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    freeoldboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     printf("Elapsed: %f seconds\n",time_spent );
@@ -56,12 +53,11 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 int max_tries=CountPossibleValues(temp);
                 int backtrack_counter=0;
                 do{
-                    CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
-                    ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
+                    //CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
+                    //ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
                     if(ReturnBoard==NULL){
                         backtrack_counter++;
-                        freeoldboard(new_board,sudoku_size);
-                        printf("freecalled");
+                        //freeoldboard(new_board,sudoku_size);                       
 
                     }
                     if(backtrack_counter==max_tries){
@@ -89,17 +85,16 @@ void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size){
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
 
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
-    //    VALUESTRUCT* temp= NULL;
-    //    VALUESTRUCT* head = board_to_free[current_cell]->values_list;
-    //    while(head!=NULL){
-    //        temp=head;
-     //       head=head->next;
-     //       free(temp);
-     //   }
-     //   board_to_free[current_cell]->values_list=NULL;
+        VALUESTRUCT* temp= NULL;
+        VALUESTRUCT* head = board_to_free[current_cell]->values_list;
+        while(head!=NULL){
+            temp=head;
+            head=head->next;
+            free(temp);
+        }
+        board_to_free[current_cell]->values_list=NULL;
         
-        
-
+        free(board_to_free[current_cell]->Peerlist);
         free(board_to_free[current_cell]);
 
     }
@@ -112,16 +107,16 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
     struct CELLINFO **ptrtable=NULL;
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
 
-    ptrtable=(struct CELLINFO **)malloc(grid_size*sizeof(CELLINFOSTRUCT * ));
+    ptrtable=(struct CELLINFO **)malloc((grid_size+1)*sizeof(CELLINFOSTRUCT * ));
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
 
         
         ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));
         ptrtable[current_cell]->cellid = old_board[current_cell]->cellid;
         ptrtable[current_cell]->number_of_peers = old_board[current_cell]->number_of_peers;
-        ptrtable[current_cell]->values_list = CopyValuesStruckt(old_board[current_cell]->values_list);
+        //ptrtable[current_cell]->values_list = CopyValuesStruckt(old_board[current_cell]->values_list);
         ptrtable[current_cell]->possible_values= old_board[current_cell]->possible_values;
-        ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
+        //ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
 
         }
 
@@ -195,6 +190,7 @@ bool IfSudokuIsSolved(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int
 
     for(i=0;i<=grid_size;i++){
         count+=array_of_sudoku_cellstruckts_to_solve[i]->possible_values;
+        if(array_of_sudoku_cellstruckts_to_solve[i]->possible_values!=1){break;}
     }
 
     if (count==(sudoku_size*sudoku_size)){return true;}

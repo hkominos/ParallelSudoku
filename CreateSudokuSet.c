@@ -10,15 +10,14 @@ CELLINFOSTRUCT** GenerateSudokuStruct(int sudoku_size, int* Board ){
     struct CELLINFO **ptrtable=NULL;
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
 
-    ptrtable=(struct CELLINFO **)malloc(grid_size*sizeof(CELLINFOSTRUCT * ));
-    for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
+    ptrtable=(struct CELLINFO **)malloc((grid_size+1)*sizeof(CELLINFOSTRUCT * ));
+    for (current_cell = 0 ;  current_cell<=(grid_size); current_cell++){
         ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));
-        //ptrtable[current_cell]->cellid = current_cell;
-        //ptrtable[current_cell]->number_of_peers = (2*sudoku_size -2 ) + (sudoku_size -(2 *((int)sqrt(sudoku_size)))+1);
-        //printf("Size is %d ",sizeof(ptrtable[current_cell]->values_list));
-        //ptrtable[current_cell]->values_list = GeneratePossibleValues(sudoku_size,Board,current_cell);
-        //ptrtable[current_cell]->possible_values= CountPossibleValues(ptrtable[current_cell]->values_list);        
-        //ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
+        ptrtable[current_cell]->cellid = current_cell;
+        ptrtable[current_cell]->number_of_peers = (2*sudoku_size -2 ) + (sudoku_size -(2 *((int)sqrt(sudoku_size)))+1);        
+        ptrtable[current_cell]->values_list = GeneratePossibleValues(sudoku_size,Board,current_cell);
+        ptrtable[current_cell]->possible_values= CountPossibleValues(ptrtable[current_cell]->values_list);        
+        ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
 
         }
 
@@ -27,7 +26,7 @@ return ptrtable;
 
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size){
 
-     int *peer_table=malloc(sizeof(int)*number_of_peers);
+    int *peer_table=malloc(sizeof(int)*number_of_peers);
     int cell2,BoxSize=sqrt(sudoku_size),j=0;
 
     for(cell2 = 0 ; cell2<= grid_size; cell2++){
@@ -65,7 +64,9 @@ VALUESTRUCT* GeneratePossibleValues(int sudoku_size, int* Board,int current_cell
             head = newnode;
         }
     }
+    
     return head;
+
 }
 
 
