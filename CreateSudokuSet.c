@@ -64,7 +64,7 @@ VALUESTRUCT* GeneratePossibleValues(int sudoku_size, int* Board,int current_cell
             head = newnode;
         }
     }
-    
+
     return head;
 
 }

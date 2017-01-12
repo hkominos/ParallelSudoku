@@ -45,7 +45,8 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
 
             if(IfSudokuIsSolved(array_of_sudoku_cellstruckts_to_solve,sudoku_size)){
                 printf("SOLVED\n");
-                ReturnBoard=putStrucktinboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
+                ReturnBoard=putStrucktinboard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);                
+                break;
             }
             else{
                 cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
@@ -84,7 +85,7 @@ void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size){
 
     int current_cell,grid_size=sudoku_size*sudoku_size-1;
 
-    for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
+    for (current_cell = 0 ;  current_cell<= grid_size; current_cell++){
         VALUESTRUCT* temp= NULL;
         VALUESTRUCT* head = board_to_free[current_cell]->values_list;
         while(head!=NULL){
@@ -92,7 +93,7 @@ void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size){
             head=head->next;
             free(temp);
         }
-        board_to_free[current_cell]->values_list=NULL;
+        //board_to_free[current_cell]->values_list=NULL;
         
         free(board_to_free[current_cell]->Peerlist);
         free(board_to_free[current_cell]);
@@ -172,7 +173,7 @@ return cell_with_min_value;
 
 int * putStrucktinboard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size){
 
-    int* final_board=(int *) malloc(sudoku_size*sudoku_size*sizeof(final_board));
+    int* final_board=(int *) malloc(sudoku_size*sudoku_size*sizeof(int));
     int i;
     int grid_size=sudoku_size*sudoku_size-1;
 

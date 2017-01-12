@@ -33,8 +33,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
         while (fgets(buffer,256, fp) != NULL){
             if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
             len = strlen(buffer);
-            *ptr_sudoku_size=len;
-            printf("sudoku_size is %d\n",len);
+            *ptr_sudoku_size=len;            
             if (firstreadflag==0){
                 Board=(int *) malloc(len*len*sizeof(int));
                 firstreadflag=1;
