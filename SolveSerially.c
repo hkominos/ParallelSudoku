@@ -12,7 +12,7 @@ int CountPossibleValues2(VALUESTRUCT** head);
 
 
 int* SolveSerially(int* board_to_solve, int sudoku_size){
-//sudoku_size =9
+
     clock_t begin = clock();
     
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);    
@@ -58,12 +58,11 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 do{
                     CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
                     ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
-                    if(ReturnBoard==NULL){
-                        backtrack_counter++;
-                        freeoldboard(new_board,sudoku_size);                       
+                    if(ReturnBoard==NULL){backtrack_counter++;}                    
+                    freeoldboard(new_board,sudoku_size);
 
-                    }
-                    if(backtrack_counter==max_tries){                        
+                    if(backtrack_counter==max_tries ){  
+                        
                         valid=false;
                         ReturnBoard=NULL;
                         backtrack_counter++;                        
