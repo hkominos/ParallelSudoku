@@ -4,6 +4,8 @@
 
 #include "functions.h"
 
+VALUESTRUCT* DeleteLinkedList(VALUESTRUCT *head);
+
 
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
 
@@ -15,7 +17,7 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
 
     
 
-    for(j=0;j<=(grid_size)&&valid==true;j++){
+    for(j=0;((j<=grid_size)&&(valid==true));j++){
         if(removal_result==INVALID){break;}
         if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values<1){
             removal_result=INVALID;
@@ -23,6 +25,7 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
         }
         else if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values>1 && valid==true){      
             value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
+            //printf("I count %d\n",CountPossibleValues(value_ptr) );
             while(value_ptr!=NULL){
 
                 if(CheckPeersForValue(value_ptr->possible_value,array_of_sudoku_cellstruckts_to_solve,j)==0){
@@ -33,7 +36,8 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
                         break;
                     }
                     else if(returnValue==MADE_PROGRESS){
-                        removal_result=MADE_PROGRESS;                        
+                        removal_result=MADE_PROGRESS;
+                        break;                        
                     }
                     else{
                         if(removal_result==MADE_PROGRESS){;}
@@ -81,28 +85,33 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
 
     int placement_result=DID_NOT_MAKE_PROGRESS;
 
-    if(array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values==1){
+    if(array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values==1){        
         placement_result=INVALID;
     }
-    else{
-        VALUESTRUCT* temp;
-        VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;
-        array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;
-        head->possible_value=final_value;
-        temp=head;
-        head->next=NULL;
-        head=temp->next;
-
-
-        while(head!=NULL){
-            temp=head;
-            head=head->next;
-            free(temp);
-        }
+    else{        
+        array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;                
+        VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;        
+        head->possible_value=final_value;       
+        head->next=DeleteLinkedList(head->next);        
         placement_result=MADE_PROGRESS;
-    }
+    }    
+   
 return placement_result;
 }
 
 
 
+VALUESTRUCT* DeleteLinkedList(VALUESTRUCT *head)
+{
+    VALUESTRUCT *current = head;
+    VALUESTRUCT *next;
+
+    while (current != NULL)
+    {
+       next = current->next;
+       free(current);
+       current = next;
+    }
+    head = NULL;
+return head;
+}
