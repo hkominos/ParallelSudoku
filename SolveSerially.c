@@ -51,23 +51,22 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 break;
             }
             else{
-                cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
+                cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);            
                 VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
                 int max_tries=CountPossibleValues(temp);
                 int backtrack_counter=0;
                 do{
                     CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
-
                     ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
                     if(ReturnBoard==NULL){
                         backtrack_counter++;
                         freeoldboard(new_board,sudoku_size);                       
 
                     }
-                    if(backtrack_counter==max_tries){
+                    if(backtrack_counter==max_tries){                        
                         valid=false;
                         ReturnBoard=NULL;
-
+                        backtrack_counter++;                        
                         break;  }
                     temp=temp->next;
                 }while(temp!=NULL && ReturnBoard==NULL );
@@ -124,7 +123,7 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
 
         }
 
-    //SetValueToCurrentcell(ptrtable,possible_value,celltoedit);
+    SetValueToCurrentcell(ptrtable,possible_value,celltoedit);
 
 
 return ptrtable;
