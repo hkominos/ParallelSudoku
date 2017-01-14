@@ -6,8 +6,8 @@
 #define MADE_PROGRESS           1
 #define DID_NOT_MAKE_PROGRESS   2
 
-
-
+#define YES                     1
+#define NO                      0
 
 typedef struct VALUE{
 
@@ -43,8 +43,8 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
-int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head);
-int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell);
+int CheckIfPeerContainsValue(int possible_value,VALUESTRUCT* head);
+int PeersHaveValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell);
 int SetValueToCurrentcell();
 bool IfSudokuIsSolved(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
 int * PutStrucktInBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);

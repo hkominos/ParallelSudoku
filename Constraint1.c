@@ -83,7 +83,6 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
     }while(head!=NULL);
 
 
-
 return returnValue;
 }
 

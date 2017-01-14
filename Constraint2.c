@@ -25,10 +25,9 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
         }
         else if(array_of_sudoku_cellstruckts_to_solve[j]->cardinality>1 && valid==true){      
             value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
-            //printf("I count %d\n",CountPossibleValues(value_ptr) );
+            
             while(value_ptr!=NULL){
-
-                if(CheckPeersForValue(value_ptr->possible_value,array_of_sudoku_cellstruckts_to_solve,j)==0){
+                if(PeersHaveValue(value_ptr->possible_value,array_of_sudoku_cellstruckts_to_solve,j)==NO){
                     returnValue=SetValueToCurrentcell(array_of_sudoku_cellstruckts_to_solve,value_ptr->possible_value,j);                   
                     if(returnValue==INVALID){
                         removal_result=INVALID;
@@ -54,20 +53,20 @@ return removal_result;
 }
 
 
-int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell){
+int PeersHaveValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell){
     int i,position,count=0;
     int* array_of_peers=array_of_sudoku_cellstruckts_to_solve[current_cell]->Peerlist;
     int number_of_peers=array_of_sudoku_cellstruckts_to_solve[current_cell]->number_of_peers;
 
     for(i=0;i<number_of_peers;i++){
         position=array_of_peers[i];        
-        count+=checkifpeerhasvalue(possible_value,array_of_sudoku_cellstruckts_to_solve[position]->values_list);
+        count+=CheckIfPeerContainsValue(possible_value,array_of_sudoku_cellstruckts_to_solve[position]->values_list);
     }    
     
 return count;
 }
 
-int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head){
+int CheckIfPeerContainsValue(int possible_value,VALUESTRUCT* head){
     int value_exists=0;
     while(head!=NULL){
         if ((head->possible_value)==possible_value){
