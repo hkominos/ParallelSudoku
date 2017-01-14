@@ -26,13 +26,8 @@ typedef struct CELLINFO{
     int* Peerlist;
 }CELLINFOSTRUCT ;
 
-//typedef struct VALUE VALUESTRUCT;
-//typedef struct CELLINFO CELLINFOSTRUCT;
+
 typedef enum { false, true } bool;
-
-
-
-
 
 
 int UserChoice(void);

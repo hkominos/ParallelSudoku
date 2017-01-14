@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "functions.h"
+#include <string.h>
 
 
 
@@ -31,7 +32,6 @@ return SolvedBoard;
 
 int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size){
 
-
     bool valid=true;
     int* ReturnBoard=NULL;
     int propagationresult=-1;
@@ -51,7 +51,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 break;
             }
             else{
-                cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);            
+                cell=findcelltobranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);                           
                 VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
                 int max_tries=CountPossibleValues(temp);
                 int backtrack_counter=0;
@@ -93,12 +93,9 @@ void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size){
             temp=head;
             head=head->next;
             free(temp);
-        }
-        //board_to_free[current_cell]->values_list=NULL;
-        
+        }        
         free(board_to_free[current_cell]->Peerlist);
         free(board_to_free[current_cell]);
-
     }
 
     free(board_to_free);
@@ -111,20 +108,28 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
 
     ptrtable=(struct CELLINFO **)malloc((grid_size+1)*sizeof(CELLINFOSTRUCT * ));
     for (current_cell = 0 ;  current_cell<= (grid_size); current_cell++){
-
         
         ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));
         ptrtable[current_cell]->cellid = old_board[current_cell]->cellid;
         ptrtable[current_cell]->number_of_peers = old_board[current_cell]->number_of_peers;
-        ptrtable[current_cell]->values_list = CopyValuesStruckt(old_board[current_cell]->values_list);
         ptrtable[current_cell]->possible_values= old_board[current_cell]->possible_values;
-        ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
+
+        if(current_cell==celltoedit){
+            struct VALUE*  head=malloc(sizeof(VALUESTRUCT));
+            head->next=NULL;            
+            ptrtable[current_cell]->values_list=head;
+            SetValueToCurrentcell(ptrtable,possible_value,celltoedit);
+         }
+         else{
+            ptrtable[current_cell]->values_list = CopyValuesStruckt(old_board[current_cell]->values_list);
+              }
+        
+        int *peer_table=malloc(sizeof(int)*ptrtable[current_cell]->number_of_peers);
+        ptrtable[current_cell]->Peerlist = memcpy(peer_table, old_board[current_cell]->Peerlist, ptrtable[current_cell]->number_of_peers*sizeof(int));        
 
         }
 
-    SetValueToCurrentcell(ptrtable,possible_value,celltoedit);
-
-
+    
 return ptrtable;
 
 }
