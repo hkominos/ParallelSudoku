@@ -19,11 +19,11 @@ int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * 
 
     for(j=0;((j<=grid_size)&&(valid==true));j++){
         if(removal_result==INVALID){break;}
-        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values<1){
+        if(array_of_sudoku_cellstruckts_to_solve[j]->cardinality<1){
             removal_result=INVALID;
             break;
         }
-        else if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values>1 && valid==true){      
+        else if(array_of_sudoku_cellstruckts_to_solve[j]->cardinality>1 && valid==true){      
             value_ptr=array_of_sudoku_cellstruckts_to_solve[j]->values_list;
             //printf("I count %d\n",CountPossibleValues(value_ptr) );
             while(value_ptr!=NULL){
@@ -85,11 +85,11 @@ int SetValueToCurrentcell(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve
 
     int placement_result=DID_NOT_MAKE_PROGRESS;
 
-    if(array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values==1){        
+    if(array_of_sudoku_cellstruckts_to_solve[current_cell]->cardinality==1){        
         placement_result=INVALID;
     }
     else{        
-        array_of_sudoku_cellstruckts_to_solve[current_cell]->possible_values=1;                
+        array_of_sudoku_cellstruckts_to_solve[current_cell]->cardinality=1;                
         VALUESTRUCT* head=array_of_sudoku_cellstruckts_to_solve[current_cell]->values_list;        
         head->possible_value=final_value;       
         head->next=DeleteLinkedList(head->next);        

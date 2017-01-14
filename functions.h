@@ -19,11 +19,11 @@ typedef struct VALUE{
 
 typedef struct CELLINFO{
 
-    int cellid;
     int number_of_peers;
-    int possible_values;
+    int cardinality;
     struct VALUE* values_list;
     int* Peerlist;
+
 }CELLINFOSTRUCT ;
 
 
@@ -47,11 +47,11 @@ int checkifpeerhasvalue(int possible_value,VALUESTRUCT* head);
 int CheckPeersForValue(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int current_cell);
 int SetValueToCurrentcell();
 bool IfSudokuIsSolved(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
-int * putStrucktinboard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
-int findcelltobranch(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
+int * PutStrucktInBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
+int FindCellToBranch(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int sudoku_size);
 CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int possible_value,int celltoedit);
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
 VALUESTRUCT* CopyValuesStruckt(VALUESTRUCT* old_values_head);
-void freeoldboard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
+void FreeOldBoard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
 
 #endif /* FUNCTIONS_H_ */

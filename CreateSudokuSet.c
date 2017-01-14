@@ -12,11 +12,10 @@ CELLINFOSTRUCT** GenerateSudokuStruct(int sudoku_size, int* Board ){
 
     ptrtable=(struct CELLINFO **)malloc((grid_size+1)*sizeof(CELLINFOSTRUCT * ));
     for (current_cell = 0 ;  current_cell<=(grid_size); current_cell++){
-        ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));
-        ptrtable[current_cell]->cellid = current_cell;
+        ptrtable[current_cell]=malloc(sizeof(CELLINFOSTRUCT));        
         ptrtable[current_cell]->number_of_peers = (2*sudoku_size -2 ) + (sudoku_size -(2 *((int)sqrt(sudoku_size)))+1);        
         ptrtable[current_cell]->values_list = GeneratePossibleValues(sudoku_size,Board,current_cell);
-        ptrtable[current_cell]->possible_values= CountPossibleValues(ptrtable[current_cell]->values_list);        
+        ptrtable[current_cell]->cardinality= CountPossibleValues(ptrtable[current_cell]->values_list);        
         ptrtable[current_cell]->Peerlist = GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );
 
         }

@@ -15,11 +15,11 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
 
     for(j=0;j<=(grid_size);j++){        
         if(removal_result==INVALID){break;}
-        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==0){
+        if(array_of_sudoku_cellstruckts_to_solve[j]->cardinality==0){
             removal_result=INVALID;
             break;
         }
-        if(array_of_sudoku_cellstruckts_to_solve[j]->possible_values==1){
+        if(array_of_sudoku_cellstruckts_to_solve[j]->cardinality==1){
 
             for(i=0;i<array_of_sudoku_cellstruckts_to_solve[j]->number_of_peers;i++){
                 from_peer=array_of_sudoku_cellstruckts_to_solve[j]->Peerlist[i];
@@ -58,7 +58,7 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
 
     do{
         if(head->possible_value==value_to_remove){
-            if(array_of_sudoku_cellstruckts_to_solve[from_peer]->possible_values==1){
+            if(array_of_sudoku_cellstruckts_to_solve[from_peer]->cardinality==1){
                returnValue=INVALID;               
                break;
             }
@@ -73,7 +73,7 @@ int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudo
                     head=previous->next;
                 }
 
-                (array_of_sudoku_cellstruckts_to_solve[from_peer]->possible_values)--;
+                (array_of_sudoku_cellstruckts_to_solve[from_peer]->cardinality)--;
                 returnValue=MADE_PROGRESS;
                 break;
             }
