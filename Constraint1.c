@@ -27,7 +27,6 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
                 if(board_to_solve[j]!=0){value_to_remove=board_to_solve[j];}
                 else{value_to_remove=array_of_sudoku_cellstruckts_to_solve[j]->values_list->possible_value;}
 
-
                 returnValue=RemoveValue(from_peer,value_to_remove,array_of_sudoku_cellstruckts_to_solve);
                 if(returnValue==INVALID){
                     removal_result=INVALID;
@@ -44,7 +43,6 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
         }
 
     }
-
 
 return removal_result;
 }

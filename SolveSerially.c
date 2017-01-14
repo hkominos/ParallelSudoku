@@ -31,14 +31,18 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
     int* ReturnBoard=NULL;
     int propagationresult=-1;
     int cell=0;
+    int run_again=NO;
+    int *ptr_to_run_again=&run_again;
 
 
     while(ReturnBoard==NULL && valid==true  ){
-        propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+        propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,ptr_to_run_again);
         if (propagationresult==MADE_PROGRESS){
-            continue;
+            if(run_again==YES)continue;
+            else propagationresult=DID_NOT_MAKE_PROGRESS;
         }
-        else if (propagationresult==DID_NOT_MAKE_PROGRESS){
+        
+        if (propagationresult==DID_NOT_MAKE_PROGRESS){
             if(IfSudokuIsSolved(array_of_sudoku_cellstruckts_to_solve,sudoku_size)){
                 printf("SOLVED\n");
                 ReturnBoard=PutStrucktInBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);                
@@ -74,14 +78,14 @@ return ReturnBoard;
 }
 
 
-int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size){
+int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again){
 
     int propagation_result,constraint1,constraint2;
+    *run_again=NO;
 
     constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
     constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    //constraint2=DID_NOT_MAKE_PROGRESS;
-
+    
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
     }
@@ -89,6 +93,9 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
         propagation_result= DID_NOT_MAKE_PROGRESS;
     }
     else{ propagation_result= MADE_PROGRESS; }
+
+    if (constraint2==MADE_PROGRESS) {
+        *run_again=YES;}
 
 return propagation_result;
 }
