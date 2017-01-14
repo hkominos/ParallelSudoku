@@ -41,7 +41,6 @@ int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_so
                 }
             }
         }
-
     }
 
 return removal_result;
