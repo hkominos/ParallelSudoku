@@ -53,5 +53,7 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
 VALUESTRUCT* CopyValuesStruckt(VALUESTRUCT* old_values_head);
 void FreeOldBoard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
+int** GenerateUnitsArray(int sudoku_size);
+void FreeArrayOfUnits(int ** array_of_units,int sudoku_size);
 
 #endif /* FUNCTIONS_H_ */

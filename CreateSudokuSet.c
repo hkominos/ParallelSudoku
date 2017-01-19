@@ -81,3 +81,55 @@ return counter;
 
 
 
+int** GenerateUnitsArray(int sudoku_size){
+
+    int grid_size=sudoku_size*sudoku_size-1;
+    int number_of_possible_units=sudoku_size*3;
+    int ** array_of_units=(int **)malloc(number_of_possible_units*sizeof(int *));
+    int i,j;
+
+    for(i=0;i<sudoku_size;i++){
+        int* row=malloc(sudoku_size*sizeof(int));
+        int set=i*sudoku_size;
+        for(j=0;j<sudoku_size;j++){
+            row[j]=set+j;
+        }
+        array_of_units[i]=row;
+    } 
+
+    for(i=0;i<sudoku_size;i++){
+        int* column=malloc(sudoku_size*sizeof(int));        
+        for(j=0;j<sudoku_size;j++){
+            column[j]=i+j*sudoku_size;            
+        }        
+        array_of_units[sudoku_size+i]=column;
+        
+    }
+    
+    int temp=0;
+    int BoxSize=sqrt(sudoku_size);
+    int current_cell=-BoxSize;    
+
+
+    for(i=0;i<sudoku_size;i++){
+        
+        int cell2;     
+        if(i%BoxSize==0&&i!=0){
+            current_cell=current_cell+(BoxSize-1)*sudoku_size; //jump lines
+        }
+        current_cell=current_cell+BoxSize;        
+                
+        int* box=malloc(sudoku_size*sizeof(int));
+        int j=0;
+        for(cell2 = 0 ; cell2<= grid_size; cell2++){
+            if  (current_cell / sudoku_size / BoxSize == cell2 / sudoku_size / BoxSize && current_cell % sudoku_size / BoxSize == cell2 % sudoku_size / BoxSize){  //if cells in box
+                    box[j++]=cell2;
+            }
+        }
+
+        array_of_units[2*sudoku_size+temp]=box;
+        temp++;        
+    }    
+
+return array_of_units;
+}
