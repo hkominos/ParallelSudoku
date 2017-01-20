@@ -38,8 +38,8 @@ CELLINFOSTRUCT** GenerateSudokuStruct (int sudoku_size,int* board_to_solve);
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size );
 VALUESTRUCT* GeneratePossibleValues (int sudoku_size, int* Board, int current_cell);
 int CountPossibleValues(VALUESTRUCT* head);
-int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size);
-int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again);
+int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units);
+int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again,int** array_of_units);
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int RemoveValue(int from_peer,int value_to_remove,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve);
@@ -55,5 +55,6 @@ VALUESTRUCT* CopyValuesStruckt(VALUESTRUCT* old_values_head);
 void FreeOldBoard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
 int** GenerateUnitsArray(int sudoku_size);
 void FreeArrayOfUnits(int ** array_of_units,int sudoku_size);
+int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int** array_of_units);
 
 #endif /* FUNCTIONS_H_ */

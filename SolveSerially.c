@@ -14,7 +14,7 @@ int* SolveSerially(int* board_to_solve, int sudoku_size){
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve); 
     int** array_of_units=GenerateUnitsArray(sudoku_size);
     //PrintSET(array_of_sudoku_cellstruckts_to_solve);
-    int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units);
     //PrintSET(array_of_sudoku_cellstruckts_to_solve);
 
     FreeArrayOfUnits(array_of_units,sudoku_size);
@@ -28,7 +28,7 @@ return SolvedBoard;
 
 
 
-int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size){
+int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units){
 
     bool valid=true;
     int* ReturnBoard=NULL;
@@ -39,7 +39,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
 
 
     while(ReturnBoard==NULL && valid==true  ){
-        propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,ptr_to_run_again);
+        propagationresult=propagete(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,ptr_to_run_again,array_of_units);
         if (propagationresult==MADE_PROGRESS){
             if(run_again==YES)continue;
             else propagationresult=DID_NOT_MAKE_PROGRESS;
@@ -58,7 +58,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 int backtrack_counter=0;
                 do{
                     CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
-                    ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size);
+                    ReturnBoard=SolveBoard(new_board,board_to_solve,sudoku_size,array_of_units);
                     if(ReturnBoard==NULL){backtrack_counter++;}                    
                     FreeOldBoard(new_board,sudoku_size);
                     if(backtrack_counter==max_tries ){                          
@@ -81,13 +81,14 @@ return ReturnBoard;
 }
 
 
-int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again){
+int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again,int** array_of_units){
 
     int propagation_result,constraint1,constraint2;
     *run_again=NO;
 
     constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    //constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
+    constraint2=CHECKALL(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units);
     
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;
