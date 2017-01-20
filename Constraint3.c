@@ -10,11 +10,8 @@
 int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int** array_of_units){
 
     int current_block;    
-    int removal_result=DID_NOT_MAKE_PROGRESS;
-    
+    int removal_result=DID_NOT_MAKE_PROGRESS;    
     int returnValue,value_to_check_for,singlurar_cell=-1;
-   
-
     int MAX_POSSIBLE_VALUE=sudoku_size;
 
     for(current_block=0;current_block<3*sudoku_size;current_block++){
@@ -23,11 +20,11 @@ int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_
             int *ptr_tocell=&singlurar_cell;
             int count=PeersHaveValue2(value_to_check_for,array_of_sudoku_cellstruckts_to_solve,array_of_peers,sudoku_size,ptr_tocell);
             if(count==0){
-                removal_result=INVALID;                
+                removal_result=INVALID;
                 break;
             }
             else if(count==1 && array_of_sudoku_cellstruckts_to_solve[singlurar_cell]->cardinality!=1){
-               // printf("I want to change %s\n", );
+               
                 returnValue=SetValueToCurrentcell(array_of_sudoku_cellstruckts_to_solve,value_to_check_for,singlurar_cell);
                 if(returnValue==INVALID){
                         removal_result=INVALID;                        
@@ -50,12 +47,6 @@ int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_
         
 return removal_result;
 }
-
-
-
-
-
-
 
 
 int PeersHaveValue2(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int* array_of_peers,int sudoku_size,int* ptr_tocell){

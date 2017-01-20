@@ -56,5 +56,7 @@ void FreeOldBoard(CELLINFOSTRUCT** board_to_free,int sudoku_size);
 int** GenerateUnitsArray(int sudoku_size);
 void FreeArrayOfUnits(int ** array_of_units,int sudoku_size);
 int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int** array_of_units);
+void Validate(int* Board,int sudoku_size);
+int PeersHaveValue2(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int* array_of_peers,int sudoku_size,int* ptr_tocell);
 
 #endif /* FUNCTIONS_H_ */

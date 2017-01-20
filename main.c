@@ -30,6 +30,10 @@ int main(){
             case 5: {
                     PrintSudoku(solved_board,*ptr_sudoku_size);
                     break;}
+            case 6: {
+                    Validate(solved_board,*ptr_sudoku_size);
+                    break;
+                    }
             case 7: {free(Board);
                     free(solved_board);
                      exit(0);

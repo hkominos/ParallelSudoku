@@ -131,5 +131,26 @@ int** GenerateUnitsArray(int sudoku_size){
         temp++;        
     }    
 
-return array_of_units;
+return array_of_units ;
+}
+
+
+void Validate(int* Board,int sudoku_size ){
+
+    int i,current_block;    
+    int** array_of_units=GenerateUnitsArray(sudoku_size);
+
+    for(current_block=0;current_block<3*sudoku_size;current_block++){
+        int sum=0;
+        int *array_to_check=array_of_units[current_block];
+        for(i=0;i<sudoku_size;i++){
+            sum+=Board[array_to_check[i]];
+        }
+        printf("Set contains sum of %d\n",sum );
+    }
+
+    FreeArrayOfUnits(array_of_units,sudoku_size);
+    printf("If every set contains the same sum of values and that is equal to arithmetic \n");
+    printf("progression sum then the sudoku must be correct. \n");
+    printf("Validation is also taken into consideration during constraint propagation \n\n");
 }
