@@ -13,7 +13,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
     int *Board;
     char ch;
     char *buffer;
-    size_t bufsize = 32;
+    size_t bufsize = 256;
 
     buffer = (char *)malloc(bufsize * sizeof(char));
     printf("Type the name of the sudoku file ");
@@ -32,7 +32,7 @@ int* LoadSudoku(int *ptr_sudoku_size){
     else{
         while (fgets(buffer,256, fp) != NULL){
             if ((pos=strchr(buffer, '\n')) != NULL)*pos = '\0';
-            len = strlen(buffer);
+            len = strlen(buffer);            
             *ptr_sudoku_size=len;            
             if (firstreadflag==0){
                 Board=(int *) malloc(len*len*sizeof(int));

@@ -10,11 +10,15 @@
 
 
 int* SolveSerially(int* board_to_solve, int sudoku_size){
-    clock_t begin = clock();    
+    clock_t begin = clock();  
+
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve); 
+
+    //PrintSET(array_of_sudoku_cellstruckts_to_solve);
     int** array_of_units=GenerateUnitsArray(sudoku_size);    
     int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units); 
     FreeArrayOfUnits(array_of_units,sudoku_size);
+    //PrintSET(array_of_sudoku_cellstruckts_to_solve);
     FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
@@ -229,7 +233,7 @@ bool IfSudokuIsSolved(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int
 
 
 void PrintSET(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve){
-    int i,count,max=80;
+    int i,count,max=1295;
     VALUESTRUCT* head;
     printf("\n");
 
