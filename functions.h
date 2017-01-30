@@ -26,10 +26,23 @@ typedef struct CELLINFO{
 
 }CELLINFOSTRUCT ;
 
+typedef struct Thread_Data{
+
+    int possible_value;
+    int my_cell;
+    int *Solved_Board;
+    int *board_to_solve;
+    int sudoku_size;
+    int** array_of_units;
+    int* ptr_is_solved;
+    CELLINFOSTRUCT** Array_of_structs;
+
+} THREADHELPERSTRUCT;
+
 
 typedef enum { false, true } bool;
 
-
+int GetThreadsFromUser(void);
 int UserChoice(void);
 int* LoadSudoku(int *sudoku_size);
 void PrintSudoku(int* Board,int sudoku_size);
@@ -38,7 +51,7 @@ CELLINFOSTRUCT** GenerateSudokuStruct (int sudoku_size,int* board_to_solve);
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size );
 VALUESTRUCT* GeneratePossibleValues (int sudoku_size, int* Board, int current_cell);
 int CountPossibleValues(VALUESTRUCT* head);
-int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units);
+int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units,int* ptr_is_solved);
 int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again,int** array_of_units);
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
@@ -58,5 +71,8 @@ void FreeArrayOfUnits(int ** array_of_units,int sudoku_size);
 int CHECKALL(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int** array_of_units);
 void Validate(int* Board,int sudoku_size);
 int PeersHaveValue2(int possible_value,CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int* array_of_peers,int sudoku_size,int* ptr_tocell);
+int* SolveInParallelManual(int* board_to_solve, int sudoku_size);
+int FindExplicitCellToBranch(CELLINFOSTRUCT**  array_of_sudoku_cellstruckts_to_solve, int sudoku_size, int Public_thread_count);
+void* ThreadedSolver(void* Helper);
 
 #endif /* FUNCTIONS_H_ */
