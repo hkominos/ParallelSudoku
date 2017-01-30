@@ -13,7 +13,8 @@ int main(){
     ptr_sudoku_size=&sudoku_size;
 
     printf("\n Sudoku Solver\n");
-    printf("\nwhat would you like to do\n\n");
+    printf("\nwhat would you like to do");
+    printf("\n Always remember to load A new Sudoku before each run!!\n\n");
     while(1)
     {
         switch(UserChoice()){

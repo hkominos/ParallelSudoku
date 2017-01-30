@@ -13,19 +13,14 @@ int* SolveSerially(int* board_to_solve, int sudoku_size){
     clock_t begin = clock(); 
     int is_solved=NO;
     int *ptr_is_solved=&is_solved; 
-
-    CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve); 
-   
+    CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);   
     int** array_of_units=GenerateUnitsArray(sudoku_size);    
     int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units,ptr_is_solved); 
     FreeArrayOfUnits(array_of_units,sudoku_size);   
     FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Elapsed: %f seconds\n",time_spent );
-
-    printf("THe value is %d\n",*ptr_is_solved );
-    
+    printf("Elapsed: %f seconds\n",time_spent );    
 return SolvedBoard;
 }
 
@@ -80,7 +75,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
             ReturnBoard=NULL;
             break;  }
     }
-    
+
 
 return ReturnBoard;
 }
