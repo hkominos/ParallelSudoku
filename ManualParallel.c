@@ -13,6 +13,11 @@ int Public_thread_count;
 
 int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
     Public_thread_count=GetThreadsFromUser();
+
+    struct timespec start, finish;
+    double elapsed;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+
     clock_t begin = clock();
     CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve=GenerateSudokuStruct(sudoku_size, board_to_solve);
     int** array_of_units=GenerateUnitsArray(sudoku_size);
@@ -91,11 +96,15 @@ int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
             }
         }
 
+        clock_gettime(CLOCK_MONOTONIC, &finish);
+        elapsed = (finish.tv_sec - start.tv_sec);
+
         clock_t end = clock();
         double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
         FreeArrayOfUnits(array_of_units,sudoku_size);   
         FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
-        printf("Elapsed: %f seconds\n",time_spent );       
+        printf("Cpu time Elapsed: %f seconds\n",time_spent );   
+        printf("Wall time Elapsed: %f seconds\n",elapsed );       
 
     return ReturnBoard;
     }    
