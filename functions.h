@@ -51,7 +51,7 @@ CELLINFOSTRUCT** GenerateSudokuStruct (int sudoku_size,int* board_to_solve);
 int* GeneratePeers(int current_cell,int number_of_peers,int grid_size,int sudoku_size );
 VALUESTRUCT* GeneratePossibleValues (int sudoku_size, int* Board, int current_cell);
 int CountPossibleValues(VALUESTRUCT* head);
-int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units,int* ptr_is_solved);
+int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* board_to_solve, int sudoku_size,int** array_of_units,int* ptr_is_solved,int level);
 int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size,int* run_again,int** array_of_units);
 int RemoveAllValuesFromPeers(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);
 int ForEveryCellDo(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board_to_solve,int sudoku_size);

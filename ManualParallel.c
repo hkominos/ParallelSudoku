@@ -117,9 +117,11 @@ int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
 
 void* ThreadedSolver(void* Helper){
 
+    int LEVEL=-1;
+
     struct Thread_Data *my_helper;
     my_helper=(struct Thread_Data *) Helper;
-    my_helper->Solved_Board=SolveBoard(my_helper->Array_of_structs,my_helper->board_to_solve,my_helper->sudoku_size,my_helper->array_of_units,my_helper->ptr_is_solved);
+    my_helper->Solved_Board=SolveBoard(my_helper->Array_of_structs,my_helper->board_to_solve,my_helper->sudoku_size,my_helper->array_of_units,my_helper->ptr_is_solved,LEVEL);
 
     return NULL;
 }
