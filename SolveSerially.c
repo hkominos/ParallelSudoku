@@ -67,7 +67,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 break;
             }
             else{
-                cell=FindCellToBranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);1
+                cell=FindCellToBranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
                 if(level==0){cell=32;level++;};
 
                 VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
