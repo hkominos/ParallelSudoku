@@ -15,8 +15,7 @@ int* SolveSerially(int* board_to_solve, int sudoku_size){
     double elapsed;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-    int LEVEL=0;
-
+    int LEVEL=0; //this must be 0 if we choose to branch on a cell at LoC70
 
     clock_t begin = clock(); 
     int is_solved=NO;
@@ -26,7 +25,6 @@ int* SolveSerially(int* board_to_solve, int sudoku_size){
     int* SolvedBoard=SolveBoard(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units,ptr_is_solved,LEVEL); 
     FreeArrayOfUnits(array_of_units,sudoku_size);   
     FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
-
 
     clock_gettime(CLOCK_MONOTONIC, &finish);
     elapsed = (finish.tv_sec - start.tv_sec);
@@ -67,10 +65,10 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
             }
             else{
                 cell=FindCellToBranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
-                if(level==0){cell=5;level++;};
+                if(level==0){cell=32;level++;};
 
                 VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
-                int max_tries=CountPossibleValues(temp);
+                int max_tries=CountPossibleValues(temp);                
                 int backtrack_counter=0;
                 do{
                     CELLINFOSTRUCT** new_board=CreateNewBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size,temp->possible_value,cell);
@@ -104,8 +102,8 @@ int propagete(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve,int * board
     *run_again=NO;
 
     constraint1=RemoveAllValuesFromPeers(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    //constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);
-    constraint2=CHECKALL(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units);
+    //constraint2=ForEveryCellDo(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size);  //WRONG implementation
+    constraint2=CHECKALL(array_of_sudoku_cellstruckts_to_solve,board_to_solve,sudoku_size,array_of_units); //RIGHt implementation
     
     if((constraint1==INVALID) || (constraint2==INVALID)){
         propagation_result= INVALID;

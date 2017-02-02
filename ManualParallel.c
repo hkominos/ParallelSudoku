@@ -45,6 +45,14 @@ int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
                 printf("SOLVED\n");
                 ReturnBoard=PutStrucktInBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
                 *ptr_is_solved_Parallel=YES;
+                clock_gettime(CLOCK_MONOTONIC, &finish);
+                elapsed = (finish.tv_sec - start.tv_sec);
+                clock_t end = clock();
+                double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+                FreeArrayOfUnits(array_of_units,sudoku_size);   
+                FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
+                printf("Cpu time Elapsed: %f seconds\n",time_spent );   
+                printf("Wall time Elapsed: %f seconds\n",elapsed );       
                 break;
             }
             else{
