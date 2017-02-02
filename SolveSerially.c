@@ -15,7 +15,10 @@ int* SolveSerially(int* board_to_solve, int sudoku_size){
     double elapsed;
     clock_gettime(CLOCK_MONOTONIC, &start);
 
-    int LEVEL=0; //this must be 0 if we choose to branch on a cell at LoC70
+    //this must be 0 if we choose to branch on a cell at LoC70
+    // In the serial version we can set it to any value >0
+
+    int LEVEL=30; 
 
     clock_t begin = clock(); 
     int is_solved=NO;
@@ -64,7 +67,7 @@ int *SolveBoard(CELLINFOSTRUCT** array_of_sudoku_cellstruckts_to_solve, int* boa
                 break;
             }
             else{
-                cell=FindCellToBranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);
+                cell=FindCellToBranch(array_of_sudoku_cellstruckts_to_solve, sudoku_size);1
                 if(level==0){cell=32;level++;};
 
                 VALUESTRUCT* temp=array_of_sudoku_cellstruckts_to_solve[cell]->values_list;
@@ -165,9 +168,9 @@ CELLINFOSTRUCT** CreateNewBoard(CELLINFOSTRUCT** old_board,int sudoku_size,int p
             ptrtable[current_cell]->values_list = CopyValuesStruckt(old_board[current_cell]->values_list);
         }
         
-        //int *peer_table=malloc(sizeof(int)*ptrtable[current_cell]->number_of_peers);
-        //ptrtable[current_cell]->Peerlist = memcpy(peer_table, old_board[current_cell]->Peerlist, ptrtable[current_cell]->number_of_peers*sizeof(int)); 
-        ptrtable[current_cell]->Peerlist=GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );       
+        int *peer_table=malloc(sizeof(int)*ptrtable[current_cell]->number_of_peers);
+        ptrtable[current_cell]->Peerlist = memcpy(peer_table, old_board[current_cell]->Peerlist, ptrtable[current_cell]->number_of_peers*sizeof(int)); 
+        //ptrtable[current_cell]->Peerlist=GeneratePeers(current_cell,ptrtable[current_cell]->number_of_peers, grid_size, sudoku_size );       
 
         }
 

@@ -29,7 +29,6 @@ int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
     int cell=0;
     int run_again=NO;
     int *ptr_to_run_again=&run_again;
-
     
 
     while(ReturnBoard==NULL && valid==true  ){
@@ -111,7 +110,7 @@ int* SolveInParallelManual(int* board_to_solve, int sudoku_size ){
         FreeArrayOfUnits(array_of_units,sudoku_size);   
         FreeOldBoard(array_of_sudoku_cellstruckts_to_solve,sudoku_size);
         printf("Cpu time Elapsed: %f seconds\n",time_spent );   
-        printf("Wall time Elapsed: %f seconds\n",elapsed );       
+        printf("Wall time Elapsed: %f seconds\n",elapsed );      
 
     
     }    
@@ -160,18 +159,15 @@ int FindExplicitCellToBranch(CELLINFOSTRUCT**  array_of_sudoku_cellstruckts_to_s
     int cell_with_min_value;
     int i,temp, grid_size=sudoku_size*sudoku_size-1;
 
-
-
      for(i=0;i<=grid_size;i++){
-        temp=array_of_sudoku_cellstruckts_to_solve[i]->cardinality;
-        //printf("I found %d \n" ,temp);
+        temp=array_of_sudoku_cellstruckts_to_solve[i]->cardinality;        
         if (temp>1){
 
             int difference=abs(Public_thread_count-temp);
 
             if(difference<best_cardinality_found){
                 cell_with_min_value=i;
-		best_cardinality_found=temp;
+                best_cardinality_found=temp;
             }
             if(temp==Public_thread_count){
                 cell_with_min_value=i;
